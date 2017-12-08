@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FsXmlMigrator.App.Cs", "FsXmlMigrator.App.Cs\FsXmlMigrator.App.Cs.csproj", "{98ECC2B4-8B15-40AE-AB4C-4D1B0CBBE21F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsXmlMigrator.Lib.Fs", "FsXmlMigrator.Lib.Fs\FsXmlMigrator.Lib.Fs.fsproj", "{9F253E1C-9EF5-448D-A328-C8053CEB0DAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FsXmlMigrator.Domain.Cs", "FsXmlMigrator.Domain.Cs\FsXmlMigrator.Domain.Cs.csproj", "{3CBCA016-5ABB-46CA-9155-0EEA439C8449}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98ECC2B4-8B15-40AE-AB4C-4D1B0CBBE21F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98ECC2B4-8B15-40AE-AB4C-4D1B0CBBE21F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98ECC2B4-8B15-40AE-AB4C-4D1B0CBBE21F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98ECC2B4-8B15-40AE-AB4C-4D1B0CBBE21F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F253E1C-9EF5-448D-A328-C8053CEB0DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F253E1C-9EF5-448D-A328-C8053CEB0DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F253E1C-9EF5-448D-A328-C8053CEB0DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F253E1C-9EF5-448D-A328-C8053CEB0DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CBCA016-5ABB-46CA-9155-0EEA439C8449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CBCA016-5ABB-46CA-9155-0EEA439C8449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CBCA016-5ABB-46CA-9155-0EEA439C8449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CBCA016-5ABB-46CA-9155-0EEA439C8449}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {701AA56D-E23B-4C8F-A7B2-F4A7C1BBC980}
+	EndGlobalSection
+EndGlobal

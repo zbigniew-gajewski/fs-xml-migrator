@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<CustomersRepository xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Customers>
+    <Customer>
+      <Id>88a8ee89-4ead-4601-a967-35c7ee44af99</Id>
+      <Name>Customer1</Name>
+      <Description>Customer 1 Description</Description>
+    </Customer>
+    <Customer>
+      <Id>6a4730fb-17f0-4612-9af9-8edcd27c0ff6</Id>
+      <Name>Customer2</Name>
+      <Description>Customer 2 Description</Description>
+    </Customer>
+    <Customer>
+      <Id>e5f5b27f-1e73-49a4-b08c-57067f07e27b</Id>
+      <Name>Customer3</Name>
+      <Description>Customer 3 Description</Description>
+    </Customer>
+  </Customers>
+</CustomersRepository>
