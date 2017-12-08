@@ -17,8 +17,8 @@
                 migrationsFromFile.MigrationHistory.Exists(fun m -> m.Name = migrationName) 
 
             // migration execution (e.g. Migration_001.migrate(), then Migration_002.migrate())
-            let migrate (migrationFromAssembly : Type) = 
-                migrationFromAssembly.GetMethod("migrate").Invoke(null, null) |> ignore
+            let migrate (migrateMethodInfo : MethodInfo) = 
+                migrateMethodInfo.Invoke(null, null) |> ignore
                 migrationsFromFile.AddNextMigration()
                 migrationsFromFile.Save()               
             
@@ -26,12 +26,12 @@
             let migrateWnenNotExists (migrationFromAssembly : Type) = 
                 if not(migrationExistsInRepository migrationFromAssembly.Name) then 
                     // breakpoint here:
-                    migrate migrationFromAssembly
+                    migrate (migrationFromAssembly.GetMethod("migrate"))
              
             // get migrations from assembly, check if exists in migration history file and execute
             Assembly.GetExecutingAssembly().GetTypes() 
                 |> Seq.filter (fun m -> m.Name.StartsWith("Migration_"))
                 |> Seq.sortBy (fun m -> m.Name)
-                |> Seq.iter (fun m -> migrateWnenNotExists m)
+                |> Seq.iter migrateWnenNotExists
 
             ()        
