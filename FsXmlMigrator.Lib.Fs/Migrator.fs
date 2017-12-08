@@ -8,28 +8,30 @@
 
         let migrate () : unit =
        
-            let migrationHistoryRepository = new MigrationHistoryRepository()
-            migrationHistoryRepository.Load()
-                        
-            let migrationsFromAssembly = 
-                Assembly.GetExecutingAssembly().GetTypes() 
-                |> Seq.filter (fun t -> t.Name.StartsWith("Migration_"))
+            // get migrations from file
+            let migrationsFromFile = new MigrationHistoryRepository()
+            migrationsFromFile.Load()
+                                             
+            // helper - checks whether next migration from assembly already exists in the file
+            let migrationExistsInRepository (migrationName : string) = 
+                migrationsFromFile.MigrationHistory.Exists(fun m -> m.Name = migrationName) 
 
-            let migrationExistsInRepository (migrationHistoryName : string) = 
-                migrationHistoryRepository.MigrationHistory.Exists(fun m -> m.Name = migrationHistoryName) 
-
+            // migration execution (e.g. Migration_001.migrate(), then Migration_002.migrate())
             let migrate (migrationFromAssembly : Type) = 
                 migrationFromAssembly.GetMethod("migrate").Invoke(null, null) |> ignore
-                migrationHistoryRepository.AddNextMigration()
-                migrationHistoryRepository.Save()               
+                migrationsFromFile.AddNextMigration()
+                migrationsFromFile.Save()               
             
+            // helper - checks if migration exists in file - if not, then executes the migration
             let migrateWnenNotExists (migrationFromAssembly : Type) = 
                 if not(migrationExistsInRepository migrationFromAssembly.Name) then 
                     // breakpoint here:
                     migrate migrationFromAssembly
-
-            migrationsFromAssembly
-                |> Seq.sortBy (fun t -> t.Name)
+             
+            // get migrations from assembly, check if exists in migration history file and execute
+            Assembly.GetExecutingAssembly().GetTypes() 
+                |> Seq.filter (fun m -> m.Name.StartsWith("Migration_"))
+                |> Seq.sortBy (fun m -> m.Name)
                 |> Seq.iter (fun m -> migrateWnenNotExists m)
 
             ()        

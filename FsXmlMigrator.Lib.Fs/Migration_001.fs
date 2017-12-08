@@ -5,6 +5,7 @@
     open FsXmlMigrator.Domain.Cs.Repositories
     open Helpers
 
+    // Each migration must keep this schema: 'Migration_<next_3_digit_number>'
     module Migration_001 = 
 
         // old CustomersRepository type declaration based on sample data 
