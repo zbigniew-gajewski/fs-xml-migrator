@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<MigrationHistoryRepository xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MigrationHistory>
+    <MigrationHistory>
+      <Id>d127d51a-9bd6-430c-987c-79286868fab8</Id>
+      <Name>Migration_000</Name>
+    </MigrationHistory>
+  </MigrationHistory>
+</MigrationHistoryRepository>

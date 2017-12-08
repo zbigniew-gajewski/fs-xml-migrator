@@ -15,7 +15,7 @@
                 Assembly.GetExecutingAssembly().GetTypes() 
                 |> Seq.filter (fun t -> t.Name.StartsWith("Migration_"))
 
-            let migrationExists (migrationHistoryName : string) = 
+            let migrationExistsInRepository (migrationHistoryName : string) = 
                 migrationHistoryRepository.MigrationHistory.Exists(fun m -> m.Name = migrationHistoryName) 
 
             let migrate (migrationFromAssembly : Type) = 
@@ -24,7 +24,9 @@
                 migrationHistoryRepository.Save()               
             
             let migrateWnenNotExists (migrationFromAssembly : Type) = 
-                if not(migrationExists migrationFromAssembly.Name) then migrate migrationFromAssembly
+                if not(migrationExistsInRepository migrationFromAssembly.Name) then 
+                    // breakpoint here:
+                    migrate migrationFromAssembly
 
             migrationsFromAssembly
                 |> Seq.sortBy (fun t -> t.Name)

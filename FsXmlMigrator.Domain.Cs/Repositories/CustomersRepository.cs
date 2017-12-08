@@ -15,7 +15,7 @@
         }
 
         public static string CustomersRepositoryFilePath =>
-            Path.Combine(Path.GetFullPath(DatabasePath), $"{nameof(CustomersRepository)}.xml");
+            Path.Combine(Path.GetFullPath(DatabasePath), $"{nameof(Customers)}.xml");
 
 
         public void Initialize()
