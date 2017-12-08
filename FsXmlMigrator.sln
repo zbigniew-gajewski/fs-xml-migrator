@@ -9,6 +9,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsXmlMigrator.Lib.Fs", "FsX
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FsXmlMigrator.Domain.Cs", "FsXmlMigrator.Domain.Cs\FsXmlMigrator.Domain.Cs.csproj", "{3CBCA016-5ABB-46CA-9155-0EEA439C8449}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsXmlMigrator.App.Fs", "FsXmlMigrator.App.Fs\FsXmlMigrator.App.Fs.fsproj", "{B5FE6A66-804A-41C0-847D-0FAA4E0B2F05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3CBCA016-5ABB-46CA-9155-0EEA439C8449}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CBCA016-5ABB-46CA-9155-0EEA439C8449}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CBCA016-5ABB-46CA-9155-0EEA439C8449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5FE6A66-804A-41C0-847D-0FAA4E0B2F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5FE6A66-804A-41C0-847D-0FAA4E0B2F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5FE6A66-804A-41C0-847D-0FAA4E0B2F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5FE6A66-804A-41C0-847D-0FAA4E0B2F05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

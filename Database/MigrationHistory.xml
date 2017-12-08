@@ -2,15 +2,15 @@
 <MigrationHistoryRepository xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <MigrationHistory>
     <MigrationHistory>
-      <Id>c07b5543-ce68-4255-95d2-6d74d47d1bf6</Id>
+      <Id>b54f2b8e-12a8-46f6-8f00-4d81834fd442</Id>
       <Name>Migration_000</Name>
     </MigrationHistory>
     <MigrationHistory>
-      <Id>0fe85fac-8e60-4b4b-8bb2-7aece543c911</Id>
+      <Id>e2c4eed6-9759-4817-b06a-80eb17073b66</Id>
       <Name>Migration_001</Name>
     </MigrationHistory>
     <MigrationHistory>
-      <Id>3b0a2239-9360-429e-b93b-b2119c3f3f47</Id>
+      <Id>d004030b-91d2-4ade-9b88-683097386305</Id>
       <Name>Migration_002</Name>
     </MigrationHistory>
   </MigrationHistory>

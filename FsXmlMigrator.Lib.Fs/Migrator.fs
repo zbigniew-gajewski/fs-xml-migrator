@@ -23,7 +23,7 @@
                 migrationsFromFile.Save()               
             
             // helper - checks if migration exists in file - if not, then executes the migration
-            let migrateWnenNotExists (migrationFromAssembly : Type) = 
+            let migrateIfNotYetDone (migrationFromAssembly : Type) = 
                 if not(migrationExistsInRepository migrationFromAssembly.Name) then 
                     // breakpoint here:
                     migrate (migrationFromAssembly.GetMethod("migrate"))
@@ -32,6 +32,6 @@
             Assembly.GetExecutingAssembly().GetTypes() 
                 |> Seq.filter (fun m -> m.Name.StartsWith("Migration_"))
                 |> Seq.sortBy (fun m -> m.Name)
-                |> Seq.iter migrateWnenNotExists
+                |> Seq.iter migrateIfNotYetDone
 
             ()        

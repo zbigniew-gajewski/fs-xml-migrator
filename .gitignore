@@ -4,9 +4,11 @@
 
 /FsXmlMigrator.Domain.Cs/bin
 /FsXmlMigrator.Domain.Cs/obj
-/FsXmlMigrator.App.Cs/obj
-/FsXmlMigrator.App.Cs/bin
 /FsXmlMigrator.Lib.Fs/bin
 /FsXmlMigrator.Lib.Fs/obj
+/FsXmlMigrator.App.Cs/obj
+/FsXmlMigrator.App.Cs/bin
+/FsXmlMigrator.App.Fs/bin
+/FsXmlMigrator.App.Fs/obj
 /.vs/FsXmlMigrator/v15/.suo
 /.vs/FsXmlMigrator/v15/Server/sqlite3
