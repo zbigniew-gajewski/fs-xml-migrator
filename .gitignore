@@ -8,14 +8,5 @@
 /FsXmlMigrator.App.Cs/bin
 /FsXmlMigrator.Lib.Fs/bin
 /FsXmlMigrator.Lib.Fs/obj
-/packages/FSharp.Data.2.4.2/lib
-/packages/FSharp.Data.2.4.2/linqpad-samples
-/packages/FSharp.Core.4.2.3/lib
-/packages/System.ValueTuple.4.4.0/lib
-/packages/System.ValueTuple.4.4.0/ref
 /.vs/FsXmlMigrator/v15/.suo
 /.vs/FsXmlMigrator/v15/Server/sqlite3
-/packages/System.ValueTuple.4.4.0/LICENSE.TXT
-/packages/System.ValueTuple.4.4.0/THIRD-PARTY-NOTICES.TXT
-/packages/System.ValueTuple.4.4.0/useSharedDesignerContext.txt
-/packages/System.ValueTuple.4.4.0/version.txt
