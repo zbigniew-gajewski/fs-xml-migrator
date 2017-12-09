@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.IO;
-    using System.Xml.Serialization;
     using FsXmlMigrator.Domain.Cs.Models;
 
     public class CustomersRepository : Repository
@@ -14,30 +13,24 @@
             Customers = new List<Customer>();
         }
 
-        public static string CustomersRepositoryFilePath =>
+        public static string FilePath =>
             Path.Combine(Path.GetFullPath(DatabasePath), $"{nameof(Customers)}.xml");
-
 
         public void Initialize()
         {
-            if (File.Exists(CustomersRepositoryFilePath))
-            {
-                File.Delete(CustomersRepositoryFilePath);
-            }
-
-            Save(InitialDataString);
+            Initialize(FilePath, () => Save(InitialDataString) );
         }
 
         public void Load()
         {
-            var repositoryStringFromFile = File.ReadAllText(CustomersRepositoryFilePath);
-            var serializer = new XmlSerializer(typeof(CustomersRepository));
-            using (var fileStream = new StringReader(repositoryStringFromFile))
+            Load<CustomersRepository>(FilePath, ApplyLoadResult);
+        }
+
+        private void ApplyLoadResult(object loadResult)
+        {
+            if (loadResult is CustomersRepository customerRepository)
             {
-                if (serializer.Deserialize(fileStream) is CustomersRepository result)
-                {
-                    Customers = result.Customers;
-                }
+                Customers = customerRepository.Customers;
             }
         }
 
@@ -48,26 +41,17 @@
 
         public void Save()
         {
-            if (File.Exists(CustomersRepositoryFilePath))
-            {
-                File.Delete(CustomersRepositoryFilePath);
-            }
-
-            var serializer = new XmlSerializer(typeof(CustomersRepository));
-            using (var fileStream = new FileStream(CustomersRepositoryFilePath, FileMode.OpenOrCreate))
-            {
-                serializer.Serialize(fileStream, this);
-            }
+            Save<MigrationHistoryRepository>(FilePath);
         }
 
         public static void Save(string newRepositoryString)
         {
-            if (File.Exists(CustomersRepositoryFilePath))
+            if (File.Exists(FilePath))
             {
-                File.Delete(CustomersRepositoryFilePath);
+                File.Delete(FilePath);
             }
 
-            File.WriteAllText(CustomersRepositoryFilePath, newRepositoryString);
+            File.WriteAllText(FilePath, newRepositoryString);
         }       
      
         private string InitialDataString =>

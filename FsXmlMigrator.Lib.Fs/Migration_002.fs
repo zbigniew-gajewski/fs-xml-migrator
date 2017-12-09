@@ -14,7 +14,7 @@
         let migrate () =         
 
             // load old repository with data using XML type provider
-            let oldCustomerRepository = CustomersRepository.Load(CustomersRepository.CustomersRepositoryFilePath)       
+            let oldCustomerRepository = CustomersRepository.Load(CustomersRepository.FilePath)       
             let oldCustomers = oldCustomerRepository.Customers // Strongly typed Customers property!
 
             // Simple migration - just adding new element 'Address' with no data

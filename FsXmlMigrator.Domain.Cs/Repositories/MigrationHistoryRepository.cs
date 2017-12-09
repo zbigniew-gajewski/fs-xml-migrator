@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Xml.Serialization;
     using System.Linq;
     using FsXmlMigrator.Domain.Cs.Models;
 
@@ -16,30 +15,24 @@
             MigrationHistory = new List<MigrationHistory>();
         }
 
-        public static string MigrationHistoryFilePath =>
+        public static string FilePath =>
             Path.Combine(Path.GetFullPath(DatabasePath), $"{nameof(MigrationHistory)}.xml");
 
         public void Initialize()
         {
-            if (File.Exists(MigrationHistoryFilePath))
-            {
-                File.Delete(MigrationHistoryFilePath);
-            }
-
-            MigrationHistory.Add(new MigrationHistory { Id = Guid.NewGuid(), Name = "Migration_000" });
-            Save();
+            Initialize(FilePath, AddFirstMigration);            
         }
 
         public void Load()
         {
-            var repositoryStringFromFile = File.ReadAllText(MigrationHistoryFilePath);
-            var serializer = new XmlSerializer(typeof(MigrationHistoryRepository));
-            using (var fileStream = new StringReader(repositoryStringFromFile))
+            Load<MigrationHistoryRepository>(FilePath, ApplyLoadResult);
+        }
+
+        private void ApplyLoadResult(object loadResult)
+        {
+            if (loadResult is MigrationHistoryRepository migrationHistoryRepository)
             {
-                if (serializer.Deserialize(fileStream) is MigrationHistoryRepository result)
-                {
-                    MigrationHistory = result.MigrationHistory;
-                }
+                MigrationHistory = migrationHistoryRepository.MigrationHistory;
             }
         }
 
@@ -56,16 +49,13 @@
 
         public void Save()
         {
-            if (File.Exists(MigrationHistoryFilePath))
-            {
-                File.Delete(MigrationHistoryFilePath);
-            }
+            Save<MigrationHistoryRepository>(FilePath);
+        }
 
-            var serializer = new XmlSerializer(typeof(MigrationHistoryRepository));
-            using (var fileStream = new FileStream(MigrationHistoryFilePath, FileMode.OpenOrCreate))
-            {
-                serializer.Serialize(fileStream, this);
-            }
+        private void AddFirstMigration()
+        {
+            MigrationHistory.Add(new MigrationHistory { Id = Guid.NewGuid(), Name = "Migration_000" });
+            Save();
         }
 
         public string GetNextMigrationName()
