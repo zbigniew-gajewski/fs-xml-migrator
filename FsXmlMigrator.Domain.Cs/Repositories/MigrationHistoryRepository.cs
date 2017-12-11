@@ -6,7 +6,7 @@
     using System.Linq;
     using FsXmlMigrator.Domain.Cs.Models;
 
-    public class MigrationHistoryRepository : Repository
+    public class MigrationHistoryRepository : Repository<MigrationHistoryRepository>
     {
         public List<MigrationHistory> MigrationHistory { get; set; }
 
@@ -15,27 +15,14 @@
             MigrationHistory = new List<MigrationHistory>();
         }
 
-        public static string FilePath =>
+        public override string FilePath =>
             Path.Combine(Path.GetFullPath(DatabasePath), $"{nameof(MigrationHistory)}.xml");
 
-        public void Initialize()
-        {
-            Initialize(FilePath, AddFirstMigration);            
-        }
+        public override Action InitializationFunction => AddFirstMigration;
 
-        public void Load()
-        {
-            Load<MigrationHistoryRepository>(FilePath, ApplyLoadResult);
-        }
+        public override Action<object> AfterLoadFunction => ApplyLoadResult;
 
-        private void ApplyLoadResult(object loadResult)
-        {
-            if (loadResult is MigrationHistoryRepository migrationHistoryRepository)
-            {
-                MigrationHistory = migrationHistoryRepository.MigrationHistory;
-            }
-        }
-
+     
         public void Add(MigrationHistory migrationHistory)
         {
             MigrationHistory.Add(migrationHistory);
@@ -47,14 +34,9 @@
             MigrationHistory.Add(nextMigration);
         }
 
-        public void Save()
-        {
-            Save<MigrationHistoryRepository>(FilePath);
-        }
-
         private void AddFirstMigration()
         {
-            MigrationHistory.Add(new MigrationHistory { Id = Guid.NewGuid(), Name = "Migration_000" });
+            MigrationHistory.Add(new MigrationHistory { Id = Guid.NewGuid(), Name = GetNextMigrationName() });
             Save();
         }
 
@@ -64,16 +46,28 @@
             var migrationZeroNumber = "000";
             var zeroMigrationName = $"{migrationName}{migrationZeroNumber}";
 
-            var lastMigrationName = MigrationHistory.OrderBy(m => m.Name).LastOrDefault()?.Name ?? zeroMigrationName;
-            var stringNumber = lastMigrationName.Substring(10, 3);
-            var intNumber = 0;
-            var parsingResult = Int32.TryParse(stringNumber, out intNumber);
-            if (parsingResult)
+            if (MigrationHistory.Any())
             {
-                return $"{migrationName}{(intNumber + 1).ToString(migrationZeroNumber)}";
+                var lastMigrationName = MigrationHistory.OrderBy(m => m.Name).LastOrDefault()?.Name ?? zeroMigrationName;
+                var stringNumber = lastMigrationName.Substring(10, 3);
+                var intNumber = 0;
+                var parsingResult = Int32.TryParse(stringNumber, out intNumber);
+                if (parsingResult)
+                {
+                    return $"{migrationName}{(intNumber + 1).ToString(migrationZeroNumber)}";
+                }
             }
 
             return $"{migrationName}{migrationZeroNumber}";
+
+        }
+
+        private void ApplyLoadResult(object loadResult)
+        {
+            if (loadResult is MigrationHistoryRepository migrationHistoryRepository)
+            {
+                MigrationHistory = migrationHistoryRepository.MigrationHistory;
+            }
         }
     }
 }

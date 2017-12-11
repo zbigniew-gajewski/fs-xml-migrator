@@ -34,4 +34,4 @@
                 |> Seq.sortBy (fun m -> m.Name)
                 |> Seq.iter migrateIfNotYetDone
 
-            ()        
+            ()

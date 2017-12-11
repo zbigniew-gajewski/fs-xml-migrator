@@ -2,8 +2,8 @@
 
     open FSharp.Data
     open System.Xml.Linq
-    open FsXmlMigrator.Domain.Cs.Repositories
     open Helpers
+    open FsXmlMigrator.Domain.Cs.Repositories
 
     // Each migration must keep this schema: 'Migration_<next_3_digit_number>'
     module Migration_002 = 
@@ -14,7 +14,8 @@
         let migrate () =         
 
             // load old repository with data using XML type provider
-            let oldCustomerRepository = CustomersRepository.Load(CustomersRepository.FilePath)       
+            let actualCustomersRepository = new FsXmlMigrator.Domain.Cs.Repositories.CustomersRepository()
+            let oldCustomerRepository = CustomersRepository.Load(actualCustomersRepository.FilePath)       
             let oldCustomers = oldCustomerRepository.Customers // Strongly typed Customers property!
 
             // Simple migration - just adding new element 'Address' with no data
@@ -22,4 +23,4 @@
             |> Seq.iter (fun c -> (addElement c.XElement "Address" "" ))
 
             // save the file using new repository definition
-            CustomersRepository.Save(oldCustomerRepository.XElement.ToString());       
+            actualCustomersRepository.Save(oldCustomerRepository.XElement.ToString());       

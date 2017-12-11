@@ -1,10 +1,11 @@
 ﻿namespace FsXmlMigrator.Domain.Cs.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using FsXmlMigrator.Domain.Cs.Models;
 
-    public class CustomersRepository : Repository
+    public class CustomersRepository : Repository<CustomersRepository>
     {
         public List<Customer> Customers { get; set; }
 
@@ -13,17 +14,16 @@
             Customers = new List<Customer>();
         }
 
-        public static string FilePath =>
+        public override string FilePath =>
             Path.Combine(Path.GetFullPath(DatabasePath), $"{nameof(Customers)}.xml");
 
-        public void Initialize()
-        {
-            Initialize(FilePath, () => Save(InitialDataString) );
-        }
+        public override Action InitializationFunction => () => Save(InitialDataString);
 
-        public void Load()
+        public override Action<object> AfterLoadFunction => ApplyLoadResult;
+
+        public void Add(Customer customer)
         {
-            Load<CustomersRepository>(FilePath, ApplyLoadResult);
+            Customers.Add(customer);
         }
 
         private void ApplyLoadResult(object loadResult)
@@ -34,26 +34,7 @@
             }
         }
 
-        public void Add(Customer customer)
-        {
-            Customers.Add(customer);
-        }
-
-        public void Save()
-        {
-            Save<MigrationHistoryRepository>(FilePath);
-        }
-
-        public static void Save(string newRepositoryString)
-        {
-            if (File.Exists(FilePath))
-            {
-                File.Delete(FilePath);
-            }
-
-            File.WriteAllText(FilePath, newRepositoryString);
-        }       
-     
+  
         private string InitialDataString =>
 @"<CustomersRepository xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
     <Customers>
@@ -74,5 +55,7 @@
         </Customer>
     </Customers>
 </CustomersRepository>";
+
+      
     }
 }

@@ -14,7 +14,8 @@
         let migrate () =         
 
             // load old repository with data using XML type provider
-            let oldCustomerRepository = CustomersRepository.Load(CustomersRepository.FilePath)       
+            let actualCustomersRepository = new FsXmlMigrator.Domain.Cs.Repositories.CustomersRepository()
+            let oldCustomerRepository = CustomersRepository.Load(actualCustomersRepository.FilePath)       
             let oldCustomers = oldCustomerRepository.Customers // Strongly typed Customers property!
 
             // Strongly typed access to the old values such as c.Description.
@@ -24,5 +25,5 @@
             |> Seq.iter (fun c -> (renameElement c.XElement "Description" "Desc" c.Description)) // Description is strongly typed!
 
             // save the file using new repository definition
-            CustomersRepository.Save(oldCustomerRepository.XElement.ToString());
+            actualCustomersRepository.Save(oldCustomerRepository.XElement.ToString());
         

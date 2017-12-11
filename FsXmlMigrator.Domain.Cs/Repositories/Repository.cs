@@ -4,42 +4,55 @@
     using System.IO;
     using System.Xml.Serialization;
 
-    public abstract class Repository
+    public abstract class Repository<T>
     {
         public static string DatabasePath => "..\\..\\..\\Database";
 
-        public void Initialize(string filePath, Action initializationFunction)
-        {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
+        public abstract string FilePath { get; }
 
-            initializationFunction();
+        public abstract Action InitializationFunction { get; }
+
+        public abstract Action<object> AfterLoadFunction { get; }
+
+        public void Initialize()
+        {
+            DeleteExistingRepository();
+            InitializationFunction();
         }
 
-        public void Load<T>(string filePath, Action<object> loadResultFunction)
+        public void Load()
         {
-            var repositoryStringFromFile = File.ReadAllText(filePath);
+            var repositoryStringFromFile = File.ReadAllText(FilePath);
             var serializer = new XmlSerializer(typeof(T));
             using (var fileStream = new StringReader(repositoryStringFromFile))
             {
                 var result = serializer.Deserialize(fileStream);
-                loadResultFunction(result);
+                AfterLoadFunction(result);
             }
         }
 
-        public void Save<T>(string filePath)
+        public void Save()
         {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
+            DeleteExistingRepository();
 
-            var serializer = new XmlSerializer(typeof(MigrationHistoryRepository));
-            using (var fileStream = new FileStream(filePath, FileMode.OpenOrCreate))
+            var serializer = new XmlSerializer(typeof(T));
+            using (var fileStream = new FileStream(FilePath, FileMode.OpenOrCreate))
             {
                 serializer.Serialize(fileStream, this);
+            }
+        }
+
+        public void Save(string newRepositoryString)
+        {
+            DeleteExistingRepository();
+            File.WriteAllText(FilePath, newRepositoryString);
+        }
+
+        private void DeleteExistingRepository()
+        {
+            if (File.Exists(FilePath))
+            {
+                File.Delete(FilePath);
             }
         }
     }
