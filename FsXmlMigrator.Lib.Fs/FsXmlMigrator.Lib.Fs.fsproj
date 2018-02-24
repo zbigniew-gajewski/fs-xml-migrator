@@ -50,7 +50,6 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Content Include="packages.config" />
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Helpers.fs" />
     <Content Include="CustomersRepository_000.xml" />
@@ -58,10 +57,11 @@
     <Compile Include="Migration_001.fs" />
     <Compile Include="Migration_002.fs" />
     <Compile Include="Migrator.fs" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">
-      <HintPath>..\packages\FSharp.Data.2.4.3\lib\net45\FSharp.Data.dll</HintPath>
+      <HintPath>..\packages\FSharp.Data.2.4.5\lib\net45\FSharp.Data.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core">
