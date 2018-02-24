@@ -12,4 +12,4 @@
 /FsXmlMigrator.App.Fs/obj
 /.vs/FsXmlMigrator/v15/.suo
 /.vs/FsXmlMigrator/v15/Server/sqlite3
-/packages
+packages
